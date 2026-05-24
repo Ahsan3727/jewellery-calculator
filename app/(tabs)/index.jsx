@@ -1,10 +1,15 @@
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, Alert
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { getSavedRate, saveRate } from '../../utils/api';   // now local
+import { getSavedRate, saveRate } from '../../utils/api';
 
 export default function HomeScreen() {
   const [rate, setRate] = useState('');
@@ -34,7 +39,7 @@ export default function HomeScreen() {
     try {
       const saved = await saveRate(num);
       setLastSaved(saved.date);
-      Alert.alert('Saved', `Rate ₹${saved.ratePerTola} / Tola saved locally.`);
+      Alert.alert('Saved', `Rate Rs ${saved.ratePerTola} / Tola saved locally.`);
     } catch (err) {
       Alert.alert('Error', 'Could not save rate.');
     }
@@ -43,7 +48,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Ionicons name="diamond" size={40} color="#FFD700" />
+        <Ionicons name="diamond" size={40} color="#B8860B" />
         <Text style={styles.title}>Jewellery Calculator</Text>
         <Text style={styles.subtitle}>Professional Pakistani Gold Pricing</Text>
       </View>
@@ -51,7 +56,7 @@ export default function HomeScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Set Today's 24K Gold Rate</Text>
         <View style={styles.inputRow}>
-          <Text style={styles.rupee}>₹</Text>
+          <Text style={styles.rupee}>Rs</Text>
           <TextInput
             style={styles.input}
             keyboardType="decimal-pad"
@@ -68,7 +73,7 @@ export default function HomeScreen() {
           disabled={loading}
         >
           <Ionicons name="save-outline" size={20} color="#fff" />
-          <Text style={styles.saveButtonText}> Save on Phone</Text>
+          <Text style={styles.saveButtonText}>Save on Phone</Text>
         </TouchableOpacity>
         {lastSaved && (
           <Text style={styles.lastSaved}>
@@ -77,7 +82,10 @@ export default function HomeScreen() {
         )}
       </View>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.push('/calculator')}>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => router.push('/calculator')}
+      >
         <Ionicons name="calculator" size={24} color="#fff" />
         <Text style={styles.navButtonText}>Open Calculator</Text>
       </TouchableOpacity>
@@ -88,10 +96,10 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F0E1',
+    backgroundColor: '#FFF9E6',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
+    paddingHorizontal: 24,
   },
   header: {
     alignItems: 'center',
@@ -101,32 +109,32 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '800',
     color: '#5C4033',
-    marginTop: 10,
+    marginTop: 8,
   },
   subtitle: {
     fontSize: 14,
-    color: '#888',
+    color: '#8B7355',
     marginTop: 4,
   },
   card: {
-    backgroundColor: '#fff',
-    padding: 24,
+    width: '100%',
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
+    padding: 24,
     borderWidth: 1,
     borderColor: '#D4AF37',
-    marginBottom: 30,
-    width: '100%',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 4,
+    marginBottom: 24,
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#5C4033',
-    marginBottom: 12,
+    marginBottom: 16,
     textAlign: 'center',
   },
   inputRow: {
@@ -135,62 +143,66 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   rupee: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '700',
     color: '#B8860B',
-    marginRight: 6,
+    marginRight: 8,
   },
   input: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#FDF8E7',
     borderWidth: 1,
     borderColor: '#D4AF37',
-    borderRadius: 8,
+    borderRadius: 12,
     padding: 12,
     fontSize: 18,
     color: '#333',
   },
   perUnit: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 16,
+    color: '#888',
     marginLeft: 8,
   },
   saveButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5C4033',
+    backgroundColor: '#B8860B',
     paddingVertical: 12,
-    borderRadius: 25,
+    borderRadius: 30,
+    marginBottom: 12,
+    elevation: 3,
   },
   saveButtonText: {
-    color: '#FFD700',
+    color: '#FFFFFF',
     fontWeight: '700',
     fontSize: 16,
+    marginLeft: 6,
   },
   lastSaved: {
     textAlign: 'center',
-    marginTop: 10,
-    fontSize: 12,
-    color: '#888',
+    color: '#999',
+    fontSize: 13,
+    marginTop: 8,
   },
   navButton: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#B8860B',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: 14,
     borderRadius: 30,
+    width: '100%',
     elevation: 4,
     shadowColor: '#B8860B',
+    shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
     shadowRadius: 8,
-    alignItems: 'center',
   },
   navButtonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 10,
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '700',
+    marginLeft: 8,
   },
 });
